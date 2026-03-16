@@ -39,7 +39,7 @@ const featureCategories = [
 
 export default function Slide11() {
   return (
-    <div className="w-full h-full flex flex-col p-10 pb-20">
+    <div className="w-full min-h-full flex flex-col p-10 pb-20">
       <div className="flex items-center gap-4 mb-4">
         <motion.div
           initial={{ opacity: 0, x: -20 }}

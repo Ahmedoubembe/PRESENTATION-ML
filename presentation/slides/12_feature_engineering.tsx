@@ -5,7 +5,7 @@ import CodeBlock from '@/components/CodeBlock'
 
 export default function Slide12() {
   return (
-    <div className="w-full h-full flex flex-col p-10 pb-20">
+    <div className="w-full min-h-full flex flex-col p-10 pb-20">
       <motion.div
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
@@ -102,7 +102,7 @@ export default function Slide12() {
             {/* Pie-like visual */}
             <div className="flex items-center gap-3">
               <div className="relative w-20 h-20">
-                <svg viewBox="0 0 36 36" className="w-full h-full -rotate-90">
+                <svg viewBox="0 0 36 36" className="w-full min-h-full -rotate-90">
                   <circle cx="18" cy="18" r="15.9" fill="none" stroke="#1e293b" strokeWidth="4" />
                   <motion.circle
                     cx="18" cy="18" r="15.9"

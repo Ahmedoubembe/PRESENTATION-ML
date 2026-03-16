@@ -14,7 +14,7 @@ const models = [
 
 export default function Slide13() {
   return (
-    <div className="w-full h-full flex flex-col p-10 pb-20">
+    <div className="w-full min-h-full flex flex-col p-10 pb-20">
       <motion.div
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}

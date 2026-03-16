@@ -46,6 +46,10 @@ const slideVariants = {
 export default function SlideContainer() {
   const [current, setCurrent] = useState(0)
   const [direction, setDirection] = useState(0)
+  const [scale, setScale] = useState(1)
+
+  const TARGET_WIDTH = 1280
+  const TARGET_HEIGHT = 720
 
   const goNext = useCallback(() => {
     if (current < slides.length - 1) {
@@ -75,10 +79,22 @@ export default function SlideContainer() {
     return () => window.removeEventListener('keydown', handleKey)
   }, [goNext, goPrev])
 
+  useEffect(() => {
+    const handleResize = () => {
+      const scaleX = window.innerWidth / TARGET_WIDTH
+      const scaleY = window.innerHeight / TARGET_HEIGHT
+      setScale(Math.min(scaleX, scaleY))
+    }
+
+    handleResize()
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
   const CurrentSlide = slides[current]
 
   return (
-    <div className="relative w-screen h-screen overflow-hidden bg-slate-950">
+    <div className="relative w-screen h-screen overflow-hidden bg-slate-950 flex items-center justify-center">
       {/* Subtle grid background */}
       <div
         className="absolute inset-0 opacity-[0.03]"
@@ -88,20 +104,30 @@ export default function SlideContainer() {
         }}
       />
 
-      <AnimatePresence initial={false} custom={direction} mode="wait">
-        <motion.div
-          key={current}
-          custom={direction}
-          variants={slideVariants}
-          initial="enter"
-          animate="center"
-          exit="exit"
-          transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="absolute inset-0"
-        >
-          <CurrentSlide />
-        </motion.div>
-      </AnimatePresence>
+      <div
+        className="relative overflow-hidden shadow-2xl"
+        style={{
+          width: TARGET_WIDTH,
+          height: TARGET_HEIGHT,
+          transform: `scale(${scale})`,
+          transformOrigin: 'center center'
+        }}
+      >
+        <AnimatePresence initial={false} custom={direction} mode="wait">
+          <motion.div
+            key={current}
+            custom={direction}
+            variants={slideVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="absolute inset-0 bg-slate-950 overflow-y-auto overflow-x-hidden slide-scroll"
+          >
+            <CurrentSlide />
+          </motion.div>
+        </AnimatePresence>
+      </div>
 
       <SlideNav
         current={current}

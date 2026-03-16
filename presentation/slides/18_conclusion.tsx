@@ -26,7 +26,7 @@ const perspectives = [
 
 export default function Slide18() {
   return (
-    <div className="w-full h-full flex flex-col p-10 pb-20">
+    <div className="w-full min-h-full flex flex-col p-10 pb-20">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -10 }}

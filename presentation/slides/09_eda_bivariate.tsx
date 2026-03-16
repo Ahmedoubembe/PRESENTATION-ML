@@ -16,7 +16,7 @@ const quartierStats = [
 
 export default function Slide09() {
   return (
-    <div className="w-full h-full flex flex-col p-10 pb-20">
+    <div className="w-full min-h-full flex flex-col p-10 pb-20">
       <div className="flex items-center gap-4 mb-4">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -61,14 +61,8 @@ export default function Slide09() {
           </div>
 
           {/* Scatter placeholder */}
-          <div className="flex-1 rounded-xl bg-slate-800/40 border border-dashed border-slate-700 flex flex-col items-center justify-center gap-2">
-            {/* IMAGE: 09_scatter_surface_prix.png — 700×380 — scatter surface vs prix coloré par quartier */}
-            <span className="text-4xl opacity-30">🎨</span>
-            <p className="text-slate-500 text-sm text-center px-6">
-              Scatter surface vs prix, coloré par quartier
-              <br />
-              <span className="text-xs font-mono text-slate-600">→ placer: public/images/09_scatter_surface_prix.png</span>
-            </p>
+          <div className="flex-1 rounded-xl bg-slate-800/40 border border-slate-700 flex items-center justify-center overflow-hidden">
+            <img src="/images/09_scatter_surface_prix.png" alt="Scatter surface vs prix" className="w-full h-full object-contain rounded-xl" />
           </div>
         </div>
 
@@ -142,7 +136,10 @@ export default function Slide09() {
               → le quartier est une feature cruciale.
             </p>
           </motion.div>
-          {/* IMAGE: 09_boxplot_quartier.png — 700×380 — boxplot prix par quartier */}
+          {/* Boxplot par quartier */}
+          <div className="flex-1 min-h-[160px] rounded-xl bg-slate-800/40 border border-slate-700 flex items-center justify-center mt-4 overflow-hidden">
+            <img src="/images/09_boxplot_quartier.png" alt="Boxplot prix par quartier" className="w-full h-full object-contain rounded-xl" />
+          </div>
         </div>
       </div>
     </div>

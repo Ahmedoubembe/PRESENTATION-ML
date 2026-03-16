@@ -34,7 +34,7 @@ const steps = [
 
 export default function Slide05() {
   return (
-    <div className="w-full h-full flex flex-col p-10 pb-20">
+    <div className="w-full min-h-full flex flex-col p-10 pb-20">
       <div className="flex items-center gap-4 mb-5">
         <motion.div
           initial={{ opacity: 0, x: -20 }}

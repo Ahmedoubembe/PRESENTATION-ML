@@ -37,7 +37,7 @@ const shortName = (f: string) => f.replace('nb_', '').replace('dist_', 'd_').rep
 
 export default function Slide10() {
   return (
-    <div className="w-full h-full flex flex-col p-10 pb-20">
+    <div className="w-full min-h-full flex flex-col p-10 pb-20">
       <div className="flex items-center gap-4 mb-4">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -148,14 +148,8 @@ export default function Slide10() {
 
         {/* Right: PCA placeholder + insights */}
         <div className="flex flex-col gap-4">
-          <div className="flex-1 rounded-xl bg-slate-800/40 border border-dashed border-slate-700 flex flex-col items-center justify-center gap-2">
-            {/* IMAGE: 10_pca_colored.png — 700×400 — PCA des features, colorée par prix */}
-            <span className="text-4xl opacity-30">🔵</span>
-            <p className="text-slate-500 text-sm text-center px-6">
-              PCA des features numériques, colorée par prix
-              <br />
-              <span className="text-xs font-mono text-slate-600">→ placer: public/images/10_pca_colored.png</span>
-            </p>
+          <div className="flex-1 rounded-xl bg-slate-800/40 border border-slate-700 flex items-center justify-center overflow-hidden">
+            <img src="/images/10_pca_colored.png" alt="PCA features" className="w-full h-full object-contain rounded-xl" />
           </div>
 
           <div className="flex flex-col gap-3">

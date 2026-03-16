@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 
 export default function Slide17() {
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center relative overflow-hidden">
+    <div className="w-full min-h-full flex flex-col items-center justify-center relative overflow-hidden">
       {/* Animated background */}
       <div className="absolute inset-0">
         <div className="absolute top-1/3 left-1/3 w-80 h-80 bg-green-600/8 rounded-full blur-3xl" />
