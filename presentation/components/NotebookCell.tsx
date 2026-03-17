@@ -35,11 +35,8 @@ export default function NotebookCell({
       transition={{ delay, duration: 0.4 }}
       className={`rounded-xl overflow-hidden border border-slate-700/60 ${className}`}
     >
-      <div className="flex">
-        <div className="flex flex-col items-end pt-3 px-2 bg-slate-900/80 border-r border-slate-700/40 min-w-[52px]">
-          <span className="text-blue-500/70 text-[10px] font-mono whitespace-nowrap">In [{index}]:</span>
-        </div>
-        <div className="flex-1 bg-slate-900 overflow-x-auto">
+      <div className="flex bg-slate-900 border-l-4 border-slate-700/50">
+        <div className="flex-1 overflow-x-auto">
           <pre className="p-3 text-[11px] leading-relaxed font-mono">
             <code dangerouslySetInnerHTML={{ __html: highlight(code) }} className="text-slate-300" />
           </pre>

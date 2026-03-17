@@ -96,20 +96,13 @@ export default function Slide03() {
           <CodeBlock
             code={`import requests
 from bs4 import BeautifulSoup
-import time
-
-headers = {"User-Agent": "SupNum-Research/1.0 (academic project)"}
 
 def scrape_page(url):
-    resp = requests.get(url, headers=headers)
-    soup = BeautifulSoup(resp.text, "html.parser")
-    listings = soup.find_all("div", class_="listing-item")
-    return [parse_listing(l) for l in listings]
+    # parse listings
+    return listings
 
 for page in range(1, 116):
-    data = scrape_page(f"{BASE_URL}?page={page}")
-    save(data)
-    time.sleep(2)  # pause éthique`}
+    data = scrape_page(url)`}
             language="python"
           />
 

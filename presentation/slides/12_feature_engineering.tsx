@@ -133,11 +133,7 @@ export default function Slide12() {
           </div>
 
           <CodeBlock
-            code={`# Détection du prix en arabe
-prix_pattern = r'(\\d+)\\s*(مليون|ألف)?\\s*(أوقية|MRO)'
-df['a_prix_titre'] = df['titre'].str.contains(
-    prix_pattern, regex=True, na=False
-).astype(int)`}
+            code={`df['a_prix_titre'] = df['titre'].str.contains(...)`}
             language="python"
           />
         </motion.div>
@@ -169,9 +165,8 @@ df['a_prix_titre'] = df['titre'].str.contains(
               <p className="text-slate-500 text-xs mt-1">Avec KFold → sécurisé ✅</p>
               <div className="flex gap-0.5">
                 {[1, 2, 3, 4, 5].map(k => (
-                  <div key={k} className={`flex-1 h-5 rounded flex items-center justify-center text-[9px] font-mono ${
-                    k === 3 ? 'bg-orange-500/30 text-orange-400 border border-orange-500/40' : 'bg-blue-500/20 text-blue-400 border border-blue-500/20'
-                  }`}>
+                  <div key={k} className={`flex-1 h-5 rounded flex items-center justify-center text-[9px] font-mono ${k === 3 ? 'bg-orange-500/30 text-orange-400 border border-orange-500/40' : 'bg-blue-500/20 text-blue-400 border border-blue-500/20'
+                    }`}>
                     {k === 3 ? '🎯' : `F${k}`}
                   </div>
                 ))}
@@ -183,14 +178,9 @@ df['a_prix_titre'] = df['titre'].str.contains(
           <CodeBlock
             code={`from sklearn.model_selection import KFold
 
-kf = KFold(n_splits=5, shuffle=True)
 for train_idx, val_idx in kf.split(X):
-    means = y[train_idx].groupby(
-        X['quartier'][train_idx]
-    ).mean()
-    X.loc[val_idx, 'q_enc'] = (
-        X['quartier'][val_idx].map(means)
-    )`}
+    # Target encoding KFold
+    pass`}
             language="python"
           />
         </motion.div>
