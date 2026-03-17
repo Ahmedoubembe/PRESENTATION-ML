@@ -87,16 +87,6 @@ export default function Slide05() {
             code={`df = pd.read_csv('housing_nouakchott.csv')
 print(df.shape)
 df.head(3)`}
-            output={{
-              type: 'table',
-              caption: '(1153, 12)',
-              headers: ['#', 'quartier', 'surface', 'prix', 'nb_ch.', 'nb_sdb'],
-              rows: [
-                { cells: ['0', 'Tevragh_Zeina', 350, '9 200 000', 5, '3'] },
-                { cells: ['1', 'Ksar', 120, '2 800 000', 3, 'NaN'] },
-                { cells: ['2', 'El_Mina', 80, '1 500 000', 2, 'NaN'] },
-              ],
-            }}
           />
 
           <NotebookCell
@@ -105,15 +95,6 @@ df.head(3)`}
             code={`# Vérification doublons & types
 print(f"Doublons: {df.duplicated().sum()}")
 print(df.dtypes[['prix','surface','quartier']])`}
-            output={{
-              type: 'text',
-              lines: [
-                { text: 'Doublons: 0', color: 'text-green-400' },
-                { text: 'prix        float64' },
-                { text: 'surface     float64' },
-                { text: 'quartier     object' },
-              ],
-            }}
           />
 
           <NotebookCell
@@ -129,16 +110,6 @@ quartier_map = {
 df['quartier'] = df['quartier'].replace(quartier_map)
 # Clipping outliers structurels
 df['nb_salons'] = df['nb_salons'].clip(upper=10)`}
-            output={{
-              type: 'text',
-              lines: [
-                { text: "df['quartier'].value_counts():" },
-                { text: 'Tevragh_Zeina    287', color: 'text-amber-300' },
-                { text: 'Ksar             231', color: 'text-blue-300' },
-                { text: 'Dar_Naim         198', color: 'text-green-300' },
-                { text: '...              ...', color: 'text-slate-500' },
-              ],
-            }}
           />
         </div>
 

@@ -68,16 +68,6 @@ print(f"Median:   {df['prix'].median():>12,.0f}")
 print(f"Std:      {df['prix'].std():>12,.0f}")
 print(f"Skewness: {skew(df['prix']):>12.3f}")
 print(f"Kurtosis: {kurtosis(df['prix']):>12.3f}")`}
-            output={{
-              type: 'text',
-              lines: [
-                { text: 'Mean:       3 842 167', color: 'text-slate-300' },
-                { text: 'Median:     2 600 000', color: 'text-slate-300' },
-                { text: 'Std:        3 174 521', color: 'text-slate-300' },
-                { text: 'Skewness:       3.524', color: 'text-red-400' },
-                { text: 'Kurtosis:      16.812', color: 'text-red-400' },
-              ],
-            }}
           />
 
           <NotebookCell
@@ -94,15 +84,6 @@ from scipy.stats import shapiro
 sample = df['log_prix'].sample(200, random_state=42)
 stat, p = shapiro(sample)
 print(f"Shapiro p-val: {p:.4f}")`}
-            output={{
-              type: 'text',
-              lines: [
-                { text: 'Skewness log:  0.124', color: 'text-green-400' },
-                { text: 'Kurtosis log:  0.382', color: 'text-green-400' },
-                { text: 'Shapiro p-val: 0.1823', color: 'text-green-400' },
-                { text: '→ Distribution ~ normale ✅', color: 'text-green-400' },
-              ],
-            }}
           />
 
           <div className="grid grid-cols-2 gap-2 mt-1">

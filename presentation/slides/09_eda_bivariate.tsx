@@ -59,13 +59,6 @@ r, p = pearsonr(
     np.log1p(df['prix'])
 )
 print(f"r = {r:.3f}, p = {p:.2e}")`}
-            output={{
-              type: 'text',
-              lines: [
-                { text: 'r = 0.624, p = 3.41e-119', color: 'text-blue-400' },
-                { text: '→ Corrélation modérée-forte ✅', color: 'text-green-400' },
-              ],
-            }}
           />
 
           <NotebookCell
@@ -83,18 +76,6 @@ print(f"Kruskal-Wallis: H={stat:.2f}, p={p:.2e}")
 df.groupby('quartier')['prix'].median()\\
   .sort_values(ascending=False)\\
   .div(1e6).round(2)`}
-            output={{
-              type: 'table',
-              caption: 'Kruskal-Wallis: H=312.4, p=1.2e-64',
-              headers: ['Quartier', 'Médiane (M MRO)'],
-              rows: [
-                { cells: ['Tevragh_Zeina', 8.50], highlight: true },
-                { cells: ['Ksar', 4.20] },
-                { cells: ['Dar_Naim', 3.80] },
-                { cells: ['Riadh', 3.50] },
-                { cells: ['El_Mina', 1.60] },
-              ],
-            }}
           />
 
           <motion.div

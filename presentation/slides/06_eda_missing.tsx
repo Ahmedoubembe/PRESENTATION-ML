@@ -60,18 +60,6 @@ export default function Slide06() {
             code={`# Taux de manquants par variable
 missing = df.isnull().mean().sort_values(ascending=False)
 missing[missing > 0]`}
-            output={{
-              type: 'table',
-              headers: ['Variable', '% manquant', 'Type'],
-              rows: [
-                { cells: ['nb_sdb', '72.1%', 'MAR'], highlight: true },
-                { cells: ['terrasse', '52.6%', 'MCAR'] },
-                { cells: ['jardin', '49.0%', 'MCAR'] },
-                { cells: ['étage', '46.2%', 'MAR'] },
-                { cells: ['parking', '38.3%', 'MCAR'] },
-                { cells: ['nb_chambres', '1.1%', 'MCAR'] },
-              ],
-            }}
           />
 
           <NotebookCell
@@ -87,13 +75,6 @@ prix_present = df.loc[~mask, 'prix']
 stat, p = kruskal(prix_missing, prix_present)
 print(f"stat={stat:.2f}, p={p:.2e}")
 print("→ MAR confirmé" if p < 0.05 else "→ MCAR")`}
-            output={{
-              type: 'text',
-              lines: [
-                { text: 'stat=24.51, p=7.23e-07', color: 'text-slate-300' },
-                { text: '→ MAR confirmé ✅', color: 'text-green-400' },
-              ],
-            }}
           />
 
           <NotebookCell
@@ -110,12 +91,6 @@ df[['nb_sdb','étage']] = imputer.fit_transform(
 # MCAR → médiane/mode
 df['nb_chambres'].fillna(df['nb_chambres'].median(), inplace=True)
 df['parking'].fillna(0, inplace=True)`}
-            output={{
-              type: 'text',
-              lines: [
-                { text: 'Valeurs manquantes restantes: 0', color: 'text-green-400' },
-              ],
-            }}
           />
 
           <div className="flex flex-col gap-1.5 mt-1">

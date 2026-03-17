@@ -95,16 +95,6 @@ for train_idx, val_idx in kf.split(df):
 # Remplir les NaN par la moyenne globale (nouveaux quartiers)
 global_mean = df['log_prix'].mean()
 df['quartier_enc'].fillna(global_mean, inplace=True)`}
-            output={{
-              type: 'text',
-              lines: [
-                { text: 'quartier_enc stats:' },
-                { text: '  Tevragh_Zeina: 15.84 (±0.12)', color: 'text-amber-400' },
-                { text: '  Ksar:          14.93 (±0.18)', color: 'text-blue-400' },
-                { text: '  El_Mina:       14.11 (±0.21)', color: 'text-slate-400' },
-                { text: 'NaN restants: 0 ✅', color: 'text-green-400' },
-              ],
-            }}
           />
 
           <NotebookCell
@@ -120,12 +110,6 @@ df['n_poi_total']         = (
 df['surface_x_dist']      = df['surface'] * df['dist_centre']
 
 print(f"Nb features final: {len(feature_cols)}")`}
-            output={{
-              type: 'text',
-              lines: [
-                { text: 'Nb features final: 45', color: 'text-green-400' },
-              ],
-            }}
           />
 
           <NotebookCell
@@ -137,16 +121,6 @@ print(pd.DataFrame({
     'Count':     [12, 8, 8, 17],
     'Exemple':   ['surface','type_villa','quartier_enc','surface²']
 }).to_string(index=False))`}
-            output={{
-              type: 'table',
-              headers: ['Catégorie', 'Count', 'Exemple clé'],
-              rows: [
-                { cells: ['Numériques', 12, 'surface, dist_centre'] },
-                { cells: ['NLP arabe', 8, 'type_villa, mention_prix'] },
-                { cells: ['Target Enc.', 8, 'quartier_enc ⭐'] },
-                { cells: ['Interactions', 17, 'surface², surface×chambres'] },
-              ],
-            }}
           />
         </div>
       </div>

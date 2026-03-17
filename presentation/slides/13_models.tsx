@@ -68,18 +68,6 @@ for name, model in models.items():
     rmsle = np.sqrt(-scores.mean())
     results[name] = rmsle
     print(f"{name:12s}: RMSLE={rmsle:.4f}")`}
-            output={{
-              type: 'table',
-              caption: 'Cross-validation 5-fold sur train',
-              headers: ['Modèle', 'RMSLE', 'R²'],
-              rows: [
-                { cells: ['Linear/Ridge', 0.782, 0.51] },
-                { cells: ['Lasso', 0.765, 0.53] },
-                { cells: ['Random Forest', 0.634, 0.67] },
-                { cells: ['GBM', 0.598, 0.72] },
-                { cells: ['XGBoost ✅', 0.541, 0.78], highlight: true },
-              ],
-            }}
           />
 
           <motion.div

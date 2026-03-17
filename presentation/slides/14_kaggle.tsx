@@ -65,17 +65,6 @@ model.fit(
     early_stopping_rounds=30,
     verbose=50
 )`}
-            output={{
-              type: 'text',
-              lines: [
-                { text: '[0]  val-rmse: 0.6821' },
-                { text: '[50] val-rmse: 0.5932' },
-                { text: '[100] val-rmse: 0.5614' },
-                { text: '[200] val-rmse: 0.5487', color: 'text-blue-400' },
-                { text: '[350] val-rmse: 0.5412', color: 'text-green-400' },
-                { text: 'Best iteration: 382', color: 'text-green-400' },
-              ],
-            }}
           />
 
           <NotebookCell
@@ -97,14 +86,6 @@ cv_rmsle = np.sqrt(
     cv=5, scoring='neg_mean_squared_error').mean()
 )
 print(f"CV RMSLE: {cv_rmsle:.4f}")`}
-            output={{
-              type: 'text',
-              lines: [
-                { text: 'CV RMSLE: 0.5389', color: 'text-green-400' },
-                { text: 'submission.csv écrit: 289 lignes', color: 'text-slate-400' },
-                { text: '→ Kaggle public score: 0.541 🏆', color: 'text-amber-400' },
-              ],
-            }}
           />
         </div>
 

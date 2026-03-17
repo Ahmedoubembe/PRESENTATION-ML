@@ -66,13 +66,6 @@ outliers = df[
     (df['prix'] < seuil_bas)
 ]
 print(f"{len(outliers)} outliers détectés")`}
-            output={{
-              type: 'text',
-              lines: [
-                { text: '23 outliers détectés', color: 'text-orange-400' },
-                { text: 'seuil_haut = 11 854 000 MRO', color: 'text-slate-400' },
-              ],
-            }}
           />
 
           <NotebookCell
@@ -80,15 +73,6 @@ print(f"{len(outliers)} outliers détectés")`}
             delay={0.4}
             code={`# Tous dans Tevragh Zeina ?
 outliers['quartier'].value_counts()`}
-            output={{
-              type: 'table',
-              headers: ['Quartier', 'Count'],
-              rows: [
-                { cells: ['Tevragh_Zeina', 19], highlight: true },
-                { cells: ['Ksar', 3] },
-                { cells: ['Dar_Naim', 1] },
-              ],
-            }}
           />
 
           <motion.div

@@ -80,18 +80,6 @@ vif = pd.DataFrame({
             for i in range(X_num.shape[1])]
 }).sort_values('VIF', ascending=False)
 print(vif.to_string(index=False))`}
-            output={{
-              type: 'table',
-              headers: ['Feature', 'VIF'],
-              rows: [
-                { cells: ['nb_chambres', 4.21] },
-                { cells: ['surface', 3.87] },
-                { cells: ['nb_sdb', 3.42] },
-                { cells: ['nb_salons', 2.15] },
-                { cells: ['dist_centre', 1.83] },
-                { cells: ['n_ecoles', 1.24] },
-              ],
-            }}
           />
 
           <motion.div
@@ -168,15 +156,6 @@ components = pca.fit_transform(X_scaled)
 print("Variance expliquée:")
 for i, v in enumerate(pca.explained_variance_ratio_):
     print(f"  PC{i+1}: {v*100:.1f}%")`}
-            output={{
-              type: 'text',
-              lines: [
-                { text: 'Variance expliquée:' },
-                { text: '  PC1: 47.8%', color: 'text-blue-400' },
-                { text: '  PC2: 21.3%', color: 'text-cyan-400' },
-                { text: '  Cumulé: 69.1%', color: 'text-green-400' },
-              ],
-            }}
           />
 
           <div className="flex-1 rounded-xl bg-slate-800/40 border border-slate-700 flex items-center justify-center overflow-hidden">
