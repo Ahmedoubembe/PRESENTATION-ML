@@ -20,12 +20,13 @@ import Slide14 from '@/slides/14_kaggle'
 import Slide15 from '@/slides/15_feature_importance'
 import Slide16 from '@/slides/16_webapp'
 import Slide17 from '@/slides/17_demo'
+import SlideDeployment from '@/slides/deploy_architecture'
 import Slide18 from '@/slides/18_conclusion'
 
 const slides = [
   Slide01, Slide02, Slide03, Slide04, Slide05, Slide06,
   Slide07, Slide08, Slide09, Slide10, Slide11, Slide12,
-  Slide13, Slide14, Slide15, Slide16, Slide17, Slide18,
+  Slide13, Slide14, Slide15, Slide16, Slide17, SlideDeployment, Slide18,
 ]
 
 const slideVariants = {
