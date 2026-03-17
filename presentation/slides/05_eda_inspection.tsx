@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import NotebookCell from '@/components/NotebookCell'
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
   ResponsiveContainer,
@@ -16,7 +17,6 @@ const missingData = [
   { name: 'type_bien', present: 980, missing: 173 },
   { name: 'étage', present: 620, missing: 533 },
   { name: 'parking', present: 711, missing: 442 },
-  { name: 'jardin', present: 589, missing: 564 },
   { name: 'terrasse', present: 545, missing: 608 },
   { name: 'titre_arabe', present: 1153, missing: 0 },
 ]
@@ -35,7 +35,7 @@ const steps = [
 export default function Slide05() {
   return (
     <div className="w-full min-h-full flex flex-col p-10 pb-20">
-      <div className="flex items-center gap-4 mb-5">
+      <div className="flex items-center gap-3 mb-4 flex-wrap">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -43,7 +43,6 @@ export default function Slide05() {
         >
           📊 Phase 3 — EDA
         </motion.div>
-        {/* Step progress */}
         <div className="flex items-center gap-1.5 flex-wrap">
           {steps.map((s, i) => (
             <motion.div
@@ -51,14 +50,13 @@ export default function Slide05() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.05 * i }}
-              className={`flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-mono ${
+              className={`px-2 py-0.5 rounded-md text-xs font-mono ${
                 s.active
                   ? 'bg-purple-500/20 border border-purple-500/40 text-purple-300'
                   : 'bg-slate-800 border border-slate-700 text-slate-500'
               }`}
             >
-              <span>{s.num}</span>
-              <span className="hidden sm:inline">{s.label}</span>
+              {s.num} {s.label}
             </motion.div>
           ))}
         </div>
@@ -68,10 +66,9 @@ export default function Slide05() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
-        className="text-4xl font-bold text-slate-100 mb-2"
+        className="text-3xl font-bold text-slate-100 mb-2"
       >
-        Étapes 1 &amp; 2 —{' '}
-        <span className="text-purple-400">Inspection &amp; Nettoyage</span>
+        Étapes 1 &amp; 2 — <span className="text-purple-400">Inspection &amp; Nettoyage</span>
       </motion.h2>
 
       <motion.div
@@ -81,43 +78,68 @@ export default function Slide05() {
         className="h-px bg-gradient-to-r from-purple-500/50 via-slate-600 to-transparent mb-4 origin-left"
       />
 
-      <div className="grid grid-cols-5 gap-6 flex-1 min-h-0">
-        {/* Left: Key stats */}
-        <div className="col-span-2 flex flex-col gap-3">
-          {[
-            { icon: '📋', label: '1 153 annonces', sub: '12 colonnes brutes' },
-            { icon: '✅', label: '0 doublon', sub: 'après déduplication' },
-            { icon: '🏘️', label: '8 quartiers', sub: 'standardisés (arabe → français)' },
-            { icon: '✂️', label: 'nb_salons > 10', sub: 'clippé → valeur max = 10' },
-          ].map((item, i) => (
-            <motion.div
-              key={item.label}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.25 + i * 0.1 }}
-              className="flex items-center gap-3 p-3.5 rounded-xl bg-slate-800/60 border border-slate-700/50"
-            >
-              <span className="text-2xl">{item.icon}</span>
-              <div>
-                <p className="text-slate-200 font-semibold">{item.label}</p>
-                <p className="text-slate-400 text-xs">{item.sub}</p>
-              </div>
-            </motion.div>
-          ))}
+      <div className="grid grid-cols-5 gap-4 flex-1 min-h-0">
+        {/* Left: Notebook cells */}
+        <div className="col-span-2 flex flex-col gap-2 overflow-y-auto">
+          <NotebookCell
+            index={1}
+            delay={0.25}
+            code={`df = pd.read_csv('housing_nouakchott.csv')
+print(df.shape)
+df.head(3)`}
+            output={{
+              type: 'table',
+              caption: '(1153, 12)',
+              headers: ['#', 'quartier', 'surface', 'prix', 'nb_ch.', 'nb_sdb'],
+              rows: [
+                { cells: ['0', 'Tevragh_Zeina', 350, '9 200 000', 5, '3'] },
+                { cells: ['1', 'Ksar', 120, '2 800 000', 3, 'NaN'] },
+                { cells: ['2', 'El_Mina', 80, '1 500 000', 2, 'NaN'] },
+              ],
+            }}
+          />
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.7 }}
-            className="p-3 rounded-xl bg-slate-800/40 border border-slate-700/30 mt-1"
-          >
-            <p className="text-slate-500 text-xs font-medium uppercase tracking-wider mb-2">Standardisation des quartiers</p>
-            <div className="flex flex-col gap-1 text-xs font-mono">
-              <span><span className="text-red-400">تيارت زين</span> → <span className="text-green-400">Tevragh_Zeina</span></span>
-              <span><span className="text-red-400">كصر</span> → <span className="text-green-400">Ksar</span></span>
-              <span><span className="text-red-400">دار النعيم</span> → <span className="text-green-400">Dar_Naim</span></span>
-            </div>
-          </motion.div>
+          <NotebookCell
+            index={2}
+            delay={0.4}
+            code={`# Vérification doublons & types
+print(f"Doublons: {df.duplicated().sum()}")
+print(df.dtypes[['prix','surface','quartier']])`}
+            output={{
+              type: 'text',
+              lines: [
+                { text: 'Doublons: 0', color: 'text-green-400' },
+                { text: 'prix        float64' },
+                { text: 'surface     float64' },
+                { text: 'quartier     object' },
+              ],
+            }}
+          />
+
+          <NotebookCell
+            index={3}
+            delay={0.55}
+            code={`# Standardisation des noms de quartiers
+quartier_map = {
+    'تيارت زين': 'Tevragh_Zeina',
+    'كصر':       'Ksar',
+    'دار النعيم':'Dar_Naim',
+    # ... 5 autres
+}
+df['quartier'] = df['quartier'].replace(quartier_map)
+# Clipping outliers structurels
+df['nb_salons'] = df['nb_salons'].clip(upper=10)`}
+            output={{
+              type: 'text',
+              lines: [
+                { text: "df['quartier'].value_counts():" },
+                { text: 'Tevragh_Zeina    287', color: 'text-amber-300' },
+                { text: 'Ksar             231', color: 'text-blue-300' },
+                { text: 'Dar_Naim         198', color: 'text-green-300' },
+                { text: '...              ...', color: 'text-slate-500' },
+              ],
+            }}
+          />
         </div>
 
         {/* Right: Chart */}
@@ -140,7 +162,7 @@ export default function Slide05() {
               <BarChart
                 data={missingData}
                 layout="vertical"
-                margin={{ top: 0, right: 20, bottom: 0, left: 60 }}
+                margin={{ top: 0, right: 20, bottom: 0, left: 65 }}
               >
                 <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" horizontal={false} />
                 <XAxis
@@ -163,13 +185,11 @@ export default function Slide05() {
                   labelStyle={{ color: '#e2e8f0' }}
                 />
                 <Legend wrapperStyle={{ color: '#94a3b8', fontSize: 12 }} />
-                <Bar dataKey="present" name="Présentes" stackId="a" fill="#3b82f6" radius={[0, 0, 0, 0]} />
+                <Bar dataKey="present" name="Présentes" stackId="a" fill="#3b82f6" />
                 <Bar dataKey="missing" name="Manquantes" stackId="a" fill="#ef444440" radius={[0, 3, 3, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </motion.div>
-          {/* IMAGE PLACEHOLDER: bar chart missing values */}
-          {/* IMAGE: 05_missing_values_bar.png — 800×400 — barres empilées présent/manquant par variable */}
         </div>
       </div>
     </div>

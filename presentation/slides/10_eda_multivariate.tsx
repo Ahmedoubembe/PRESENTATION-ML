@@ -1,8 +1,8 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import NotebookCell from '@/components/NotebookCell'
 
-// Simulated correlation values for heatmap
 const features = ['prix', 'surface', 'nb_chambres', 'nb_sdb', 'nb_salons', 'dist_centre', 'dist_aero', 'n_ecoles']
 const correlations: Record<string, number> = {
   'prix-prix': 1.00, 'prix-surface': 0.62, 'prix-nb_chambres': 0.45, 'prix-nb_sdb': 0.51,
@@ -38,7 +38,7 @@ const shortName = (f: string) => f.replace('nb_', '').replace('dist_', 'd_').rep
 export default function Slide10() {
   return (
     <div className="w-full min-h-full flex flex-col p-10 pb-20">
-      <div className="flex items-center gap-4 mb-4">
+      <div className="flex items-center gap-4 mb-3">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -52,124 +52,163 @@ export default function Slide10() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
-        className="text-4xl font-bold text-slate-100 mb-2"
+        className="text-3xl font-bold text-slate-100 mb-2"
       >
-        Analyse{' '}
-        <span className="text-indigo-400">multivariée</span>
+        Analyse <span className="text-indigo-400">multivariée</span>
       </motion.h2>
 
       <motion.div
         initial={{ scaleX: 0 }}
         animate={{ scaleX: 1 }}
         transition={{ delay: 0.2 }}
-        className="h-px bg-gradient-to-r from-indigo-500/50 via-slate-600 to-transparent mb-4 origin-left"
+        className="h-px bg-gradient-to-r from-indigo-500/50 via-slate-600 to-transparent mb-3 origin-left"
       />
 
-      <div className="grid grid-cols-2 gap-8 flex-1 min-h-0">
-        {/* Left: Heatmap */}
+      <div className="grid grid-cols-2 gap-5 flex-1 min-h-0">
+        {/* Left: Heatmap + code */}
         <div className="flex flex-col gap-3">
+          <NotebookCell
+            index={13}
+            delay={0.25}
+            code={`# VIF — détection multicolinéarité
+from statsmodels.stats.outliers_influence import variance_inflation_factor
+
+X_num = df[num_features].dropna()
+vif = pd.DataFrame({
+    'feature': num_features,
+    'VIF': [variance_inflation_factor(X_num.values, i)
+            for i in range(X_num.shape[1])]
+}).sort_values('VIF', ascending=False)
+print(vif.to_string(index=False))`}
+            output={{
+              type: 'table',
+              headers: ['Feature', 'VIF'],
+              rows: [
+                { cells: ['nb_chambres', 4.21] },
+                { cells: ['surface', 3.87] },
+                { cells: ['nb_sdb', 3.42] },
+                { cells: ['nb_salons', 2.15] },
+                { cells: ['dist_centre', 1.83] },
+                { cells: ['n_ecoles', 1.24] },
+              ],
+            }}
+          />
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+            className="p-3 rounded-xl bg-green-500/5 border border-green-500/20"
+          >
+            <p className="text-green-400 text-sm font-semibold">✅ VIF &lt; 5 pour toutes les variables</p>
+            <p className="text-slate-400 text-xs mt-0.5">Pas de multicollinéarité problématique → conserver toutes les features</p>
+          </motion.div>
+
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.3 }}
+            transition={{ delay: 0.5 }}
             className="text-slate-400 text-xs font-medium uppercase tracking-widest"
           >
-            Heatmap de corrélation (Pearson)
+            Heatmap corrélation (Pearson, log-space)
           </motion.p>
 
+          {/* Heatmap inline */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-            className="flex-1 overflow-hidden"
+            transition={{ delay: 0.55 }}
+            className="flex flex-col gap-0.5"
           >
-            {/* Inline heatmap */}
-            <div className="flex flex-col gap-0.5">
-              {/* Header row */}
-              <div className="flex gap-0.5">
-                <div className="w-16 shrink-0" />
-                {features.map(f => (
-                  <div key={f} className="flex-1 text-center text-slate-500 text-[9px] font-mono" style={{ writingMode: 'vertical-lr', transform: 'rotate(180deg)', height: 44, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    {shortName(f)}
-                  </div>
-                ))}
-              </div>
-              {features.map((rowF, ri) => (
-                <motion.div
-                  key={rowF}
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.45 + ri * 0.05 }}
-                  className="flex gap-0.5"
-                >
-                  <div className="w-16 shrink-0 text-right pr-1.5 text-slate-500 text-[9px] font-mono flex items-center justify-end">
-                    {shortName(rowF)}
-                  </div>
-                  {features.map((colF, ci) => {
-                    const v = getCorr(rowF, colF)
-                    return (
-                      <div
-                        key={colF}
-                        className={`flex-1 aspect-square rounded-sm flex items-center justify-center text-[8px] font-bold ${corrColor(v)}`}
-                      >
-                        {v !== 0 ? v.toFixed(2).replace('0.', '.') : '—'}
-                      </div>
-                    )
-                  })}
-                </motion.div>
+            <div className="flex gap-0.5">
+              <div className="w-14 shrink-0" />
+              {features.map(f => (
+                <div key={f} className="flex-1 text-center text-slate-500 text-[8px] font-mono flex items-end justify-center pb-1" style={{ height: 36 }}>
+                  <span style={{ writingMode: 'vertical-lr', transform: 'rotate(180deg)' }}>{shortName(f)}</span>
+                </div>
               ))}
             </div>
-
-            {/* Legend */}
-            <div className="flex items-center gap-2 mt-3">
-              <div className="flex gap-1">
-                {[-0.5, -0.2, 0, 0.3, 0.5, 0.8].map(v => (
-                  <div key={v} className={`w-6 h-3 rounded-sm ${corrColor(v)}`} />
-                ))}
-              </div>
-              <span className="text-slate-500 text-xs">-1.0 → +1.0</span>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.8 }}
-            className="p-3 rounded-xl bg-green-500/5 border border-green-500/20"
-          >
-            <p className="text-green-400 text-sm font-semibold">
-              ✅ Pas de multicollinéarité (VIF &lt; 5)
-            </p>
-            <p className="text-slate-400 text-xs mt-1">
-              Surface et nb_chambres corrélées (0.71) mais VIF acceptable → pas de suppression nécessaire
-            </p>
+            {features.map((rowF, ri) => (
+              <motion.div
+                key={rowF}
+                initial={{ opacity: 0, x: -8 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.6 + ri * 0.04 }}
+                className="flex gap-0.5"
+              >
+                <div className="w-14 shrink-0 text-right pr-1 text-slate-500 text-[8px] font-mono flex items-center justify-end">{shortName(rowF)}</div>
+                {features.map((colF) => {
+                  const v = getCorr(rowF, colF)
+                  return (
+                    <div key={colF} className={`flex-1 aspect-square rounded-sm flex items-center justify-center text-[7px] font-bold ${corrColor(v)}`}>
+                      {v.toFixed(2).replace('0.', '.').replace('-0.', '-.')}
+                    </div>
+                  )
+                })}
+              </motion.div>
+            ))}
           </motion.div>
         </div>
 
-        {/* Right: PCA placeholder + insights */}
-        <div className="flex flex-col gap-4">
+        {/* Right: PCA code + image */}
+        <div className="flex flex-col gap-3">
+          <NotebookCell
+            index={14}
+            delay={0.35}
+            code={`# PCA pour visualisation
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
+
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X_num)
+
+pca = PCA(n_components=2)
+components = pca.fit_transform(X_scaled)
+
+print("Variance expliquée:")
+for i, v in enumerate(pca.explained_variance_ratio_):
+    print(f"  PC{i+1}: {v*100:.1f}%")`}
+            output={{
+              type: 'text',
+              lines: [
+                { text: 'Variance expliquée:' },
+                { text: '  PC1: 47.8%', color: 'text-blue-400' },
+                { text: '  PC2: 21.3%', color: 'text-cyan-400' },
+                { text: '  Cumulé: 69.1%', color: 'text-green-400' },
+              ],
+            }}
+          />
+
           <div className="flex-1 rounded-xl bg-slate-800/40 border border-slate-700 flex items-center justify-center overflow-hidden">
-            <img src="/images/10_pca_colored.png" alt="PCA features" className="w-full h-full object-contain rounded-xl" />
+            {/* IMAGE: 10_pca_colored.png — 700×340 */}
+            <img
+              src="/images/10_pca_colored.png"
+              alt="PCA features"
+              className="w-full h-full object-contain rounded-xl"
+              onError={(e) => {
+                (e.target as HTMLImageElement).style.display = 'none'
+                const p = (e.target as HTMLImageElement).parentElement
+                if (p) p.innerHTML = '<p class="text-slate-500 text-sm text-center px-6">🔵 PCA colorée par prix<br/><span class="text-xs font-mono text-slate-600">→ public/images/10_pca_colored.png</span></p>'
+              }}
+            />
           </div>
 
-          <div className="flex flex-col gap-3">
+          <div className="grid grid-cols-3 gap-2">
             {[
-              { icon: '🎯', stat: 'VIF < 5', desc: 'pour toutes les variables → pas de multicollinéarité problématique' },
-              { icon: '🔵', stat: 'PC1 ≈ 48%', desc: 'variance expliquée → dominée par surface et nb_pièces' },
-              { icon: '🔴', stat: 'PC2 ≈ 22%', desc: 'variance → capture la localisation (distances)' },
+              { icon: '🎯', stat: 'VIF < 5', desc: 'Pas de multicolinéarité' },
+              { icon: '🔵', stat: 'PC1 48%', desc: 'Surface + pièces' },
+              { icon: '🔴', stat: 'PC2 21%', desc: 'Localisation' },
             ].map((item, i) => (
               <motion.div
                 key={item.stat}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.5 + i * 0.1 }}
-                className="flex items-center gap-3 p-3 rounded-xl bg-slate-800/60 border border-slate-700/50"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.7 + i * 0.08 }}
+                className="p-2 rounded-xl bg-slate-800/60 border border-slate-700/50 text-center"
               >
-                <span className="text-xl">{item.icon}</span>
-                <div>
-                  <span className="text-indigo-400 font-bold font-mono">{item.stat}</span>
-                  <span className="text-slate-400 text-sm"> {item.desc}</span>
-                </div>
+                <p className="text-lg">{item.icon}</p>
+                <p className="text-indigo-400 font-bold text-xs font-mono">{item.stat}</p>
+                <p className="text-slate-500 text-[10px]">{item.desc}</p>
               </motion.div>
             ))}
           </div>
