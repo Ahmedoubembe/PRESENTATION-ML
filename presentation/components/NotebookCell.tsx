@@ -9,19 +9,6 @@ interface NotebookCellProps {
   className?: string
 }
 
-function highlight(code: string): string {
-  return code
-    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-    .replace(/(["'`])((?:(?!\1)[^\\]|\\.)*)(\1)/g, '<span class="text-green-400">$1$2$3</span>')
-    .replace(/\b(def|class|import|from|return|if|else|elif|for|while|in|not|and|or|True|False|None|with|as|try|except|raise|lambda|yield|async|await|print|f)\b/g,
-      '<span class="text-purple-400">$1</span>')
-    .replace(/(@\w+)/g, '<span class="text-yellow-400">$1</span>')
-    .replace(/\b(\d+\.?\d*(?:e[+-]?\d+)?)\b/g, '<span class="text-orange-300">$1</span>')
-    .replace(/(#[^\n]*)/g, '<span class="text-slate-500 italic">$1</span>')
-    .replace(/\b(len|range|print|list|dict|set|tuple|int|float|str|bool|type|sum|max|min|abs|round|sorted|enumerate|zip|map|filter|np|pd|plt|sns|xgb|KFold|variance_inflation_factor|pearsonr|kruskal|log1p)\b(?!\s*=)/g,
-      '<span class="text-cyan-400">$1</span>')
-}
-
 export default function NotebookCell({
   index = 1,
   code,
@@ -38,7 +25,9 @@ export default function NotebookCell({
       <div className="flex bg-slate-900 border-l-4 border-slate-700/50">
         <div className="flex-1 overflow-x-auto">
           <pre className="p-3 text-[11px] leading-relaxed font-mono">
-            <code dangerouslySetInnerHTML={{ __html: highlight(code) }} className="text-slate-300" />
+            <code className="text-slate-300">
+              {code}
+            </code>
           </pre>
         </div>
       </div>
