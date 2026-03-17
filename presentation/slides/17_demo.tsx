@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import Link from 'next/link'
 
 export default function Slide17() {
   return (
@@ -44,25 +45,42 @@ export default function Slide17() {
           </motion.p>
         </div>
 
-        {/* App URL */}
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          className="w-full p-4 rounded-2xl bg-slate-800/60 border border-slate-700 flex items-center gap-3"
-        >
-          <div className="w-10 h-10 rounded-xl bg-green-500/20 border border-green-500/30 flex items-center justify-center text-green-400 text-xl shrink-0">
-            🌐
-          </div>
-          <div className="flex-1">
-            <p className="text-slate-400 text-xs mb-0.5">URL de l&apos;application</p>
-            <p className="text-slate-200 font-mono text-sm">
-              {/* Replace with actual URL when deployed */}
-              <span className="text-green-400">http://localhost:3000</span>
-              <span className="text-slate-500 ml-3 text-xs">(ou URL de déploiement)</span>
-            </p>
-          </div>
-        </motion.div>
+        {/* Navigation buttons */}
+        <div className="w-full grid grid-cols-2 gap-4">
+          <Link href="/predict" className="w-full block">
+            <motion.div
+              initial={{ opacity: 0, x: -15 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.5 }}
+              className="w-full p-4 rounded-2xl bg-slate-800/60 border border-slate-700 hover:border-blue-500/50 hover:bg-slate-800/80 transition-all cursor-pointer flex flex-col items-center gap-3 group"
+            >
+              <div className="w-14 h-14 rounded-2xl bg-blue-500/20 border border-blue-500/30 flex items-center justify-center text-blue-400 text-3xl group-hover:scale-110 transition-transform">
+                🔮
+              </div>
+              <div className="text-center">
+                <h3 className="text-slate-200 font-semibold text-lg mb-1">Prédiction</h3>
+                <p className="text-slate-400 text-xs">Estimer le prix d&apos;un bien</p>
+              </div>
+            </motion.div>
+          </Link>
+
+          <Link href="/analyse" className="w-full block">
+            <motion.div
+              initial={{ opacity: 0, x: 15 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.55 }}
+              className="w-full p-4 rounded-2xl bg-slate-800/60 border border-slate-700 hover:border-purple-500/50 hover:bg-slate-800/80 transition-all cursor-pointer flex flex-col items-center gap-3 group"
+            >
+              <div className="w-14 h-14 rounded-2xl bg-purple-500/20 border border-purple-500/30 flex items-center justify-center text-purple-400 text-3xl group-hover:scale-110 transition-transform">
+                📊
+              </div>
+              <div className="text-center">
+                <h3 className="text-slate-200 font-semibold text-lg mb-1">Analyse</h3>
+                <p className="text-slate-400 text-xs">Explorer les données du marché</p>
+              </div>
+            </motion.div>
+          </Link>
+        </div>
 
         {/* Demo steps */}
         <motion.div
