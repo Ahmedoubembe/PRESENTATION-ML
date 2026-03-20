@@ -1,4 +1,4 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://model-home-scope-2.onrender.com'
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://model-home-scope-4.onrender.com'
 
 export interface PredictionInput {
   quartier: string
